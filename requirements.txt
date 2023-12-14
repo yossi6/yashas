@@ -1,0 +1,9 @@
+Package            Version
+------------------ ----------
+certifi            2023.11.17
+charset-normalizer 3.3.2
+idna               3.6
+pip                23.2.1
+requests           2.31.0
+setuptools         65.5.0
+urllib3            2.1.0
