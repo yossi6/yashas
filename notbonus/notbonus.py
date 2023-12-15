@@ -41,7 +41,7 @@ def main():
     related_domains = [rd[i]["id"] for i in range(len(rd))]
     print(related_domains)
     
-    #get contacted domains // supposed to be in a different api call
+    #get contacted ip addresses // supposed to be in a different api call
     #in this case its appended to the regular report
     rip = vtfile["relationships"]["contacted_ips"]["data"]
     related_ips = [rip[i]["id"] for i in range(len(rip))]
