@@ -40,7 +40,7 @@ def main(hash, api_key):
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        print("[API Call success] File report incoming")
+        print("\n[API Call success] File report incoming\n")
         json_response = json.loads(response.text)
 
         report = open('report.json', 'w')
@@ -51,19 +51,22 @@ def main(hash, api_key):
         mal_count = detection_count(json_response)
         file_hashes = get_hashes(json_response)
         print(f"the file \"{filename}\" of type {filetype} was detected in {mal_count} engines")
-        print(file_hashes)
+        print(f'Hashes: {file_hashes}')
 
     else:
         print('[API Call failed] failed to fetch report')
 
     ip_response = requests.get(ip_url, headers=headers)
     if ip_response.status_code == 200:
-        print("[API Call success] Related ip addresses incoming")
+        print("\n[API Call success] Related ip addresses incoming\n")
+        ip_json = json.loads(ip_response.text)
 
         ip_data = open('ip_data.json', 'w')
         ip_data.write(ip_response.text)
 
-        print('Related IP addresses can be found in ip_data.json file')
+        related_ips = [ip_json["data"][i]["id"] for i in range(len(ip_json["data"]))]
+        print(f'Related IP addresses: {related_ips}')
+        print('Related IP addresses can also be found in ip_data.json file')
 
     else:
         print('[API Call failed] failed to fetch relatd IP addresses')
@@ -71,12 +74,15 @@ def main(hash, api_key):
 
     dom_response = requests.get(dom_url, headers=headers)
     if dom_response.status_code == 200:
-        print("[API Call success] Related domains incoming")
+        print("\n[API Call success] Related domains incoming\n")
+        dom_json = json.loads(dom_response.text)
 
         dom_data = open('domain_data.json', 'w')
         dom_data.write(dom_response.text)
 
-        print('Related Domains can be found in the domain_data.json file')
+        related_domains = [dom_json["data"][i]["id"] for i in range(len(dom_json["data"]))]
+        print(f'Related domains: {related_domains}')
+        print('Related Domains can also be found in the domain_data.json file')
 
     else:
         print('[API Call failed] failed to fetch related domains')
